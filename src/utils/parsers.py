@@ -1,4 +1,7 @@
 from pathlib import Path
+from muselearn.src.helpers.errors import FileExistsError2
+
+
 
 
 def input_file_path(directory: str, file_name: str) -> Path:
@@ -45,10 +48,9 @@ def output_file_path(directory: str, file_name: str, mode: str='protected') -> P
         return path_to_file
     else:
         if mode == 'protected':
-            raise FileExistsError(
+            raise FileExistsError2(
                 'disallowing overwriting file using result_directory={directory}, output_file={output_file}'.format(
-                    directory=directory, output_file=file_name
-                )
-            )
+                    directory=directory, output_file=file_name)
+                , directory, file_name)
         elif mode == 'overwrite':
             return path_to_file

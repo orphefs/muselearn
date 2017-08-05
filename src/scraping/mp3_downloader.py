@@ -7,6 +7,7 @@ import ast
 from scrapy.utils.url import urlparse
 from muselearn.src.utils.parsers import input_file_path, output_file_path
 from muselearn.definitions import ROOT_DIR
+from muselearn.src.helpers.errors import FileExistsError2
 
 
 def get_json(youtube_video_link: str) -> Path:
@@ -33,9 +34,14 @@ def get_mp3(path_to_json: Path) -> Path:
     url_to_mp3 = json_content['link'].replace("\\", "")
     file_name = json_content['title'].replace(" ", "_")
 
-    path_to_mp3 = output_file_path(directory=os.path.join(ROOT_DIR, 'data', 'music'),
+    try:
+        path_to_mp3 = output_file_path(directory=os.path.join(ROOT_DIR, 'data', 'music'),
                                    file_name=file_name + '.mp3',
                                    mode='protected')
+    except FileExistsError2 as err:
+        path_to_mp3 = os.path.join(err.directory, err.file_name)
+        print("File exists: " + err.message)
+        return path_to_mp3
 
     response = requests.get(url_to_mp3)
 
@@ -50,10 +56,7 @@ def get_mp3(path_to_json: Path) -> Path:
 def download_mp3_from_youtube_link(youtube_video_link: str):
     path_to_json = get_json(youtube_video_link)
 
-    try:
-        path_to_mp3 = get_mp3(path_to_json)
-    except FileExistsError as err:
-        print('mp3 file already exists: {}'.format(err))
+    path_to_mp3 = get_mp3(path_to_json)
 
     return path_to_mp3
 

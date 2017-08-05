@@ -52,5 +52,4 @@ for i in videos_list_response['items']:
     res.append(temp_res)
 
 df = pd.DataFrame.from_dict(res)
-result = df.sort_values(by=df['viewCount'])
-print(result)
+print(df.head())

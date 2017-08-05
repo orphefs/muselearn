@@ -13,7 +13,7 @@ def get_json(youtube_video_link: str) -> Path:
     path_to_json = output_file_path(directory=os.path.join(ROOT_DIR, 'data', 'music'),
                                     file_name=re.match('.*=(?P<video_id>\w*)$', youtube_video_link).group(
                                         'video_id') + '.json',
-                                    mode='protected')
+                                    mode='overwrite')
 
     url_to_json = 'http://www.youtubeinmp3.com/fetch/?format=JSON&video=' + youtube_video_link
 
@@ -47,11 +47,17 @@ def get_mp3(path_to_json: Path) -> Path:
     return path_to_mp3
 
 
+def download_mp3_from_youtube_link(youtube_video_link: str):
+    path_to_json = get_json(youtube_video_link)
+
+    try:
+        path_to_mp3 = get_mp3(path_to_json)
+    except FileExistsError as err:
+        print('mp3 file already exists: {}'.format(err))
+
+    return path_to_mp3
+
+
 if __name__ == '__main__':
-
-    path_to_json = Path('/home/orphefs/Documents/Code/muselearn/muselearn/data/music/i62Zjga8JOM.json')
-    # path_to_json = []
-    if not os.path.exists(path_to_json):
-        path_to_json = get_json(youtube_video_link='https://www.youtube.com/watch?v=i62Zjga8JOM')
-
-    path_to_mp3 = get_mp3(path_to_json)
+    path_to_mp3 = download_mp3_from_youtube_link('https://www.youtube.com/watch?v=i62Zjga8JOM')
+    print(path_to_mp3)

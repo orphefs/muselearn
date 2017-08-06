@@ -5,7 +5,7 @@ import magic
 import subprocess
 
 
-class Converter(object):
+class FileConverter(object):
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, path_to_input_file: Path):
@@ -15,10 +15,10 @@ class Converter(object):
 
     # Create based on class name:
     @staticmethod
-    def from_type(type, path_to_input_file):
-        if type == "wav_to_mp3":
+    def from_type(conversion_type, path_to_input_file):
+        if conversion_type == "wav_to_mp3":
             return _Wav2Mp3(path_to_input_file)
-        elif type == "mp3_to_wav":
+        elif conversion_type == "mp3_to_wav":
             return _Mp32Wav(path_to_input_file)
         else:
             raise TypeError
@@ -29,7 +29,7 @@ class Converter(object):
         return
 
 
-class _Wav2Mp3(Converter):
+class _Wav2Mp3(FileConverter):
     def __init__(self, path_to_input_file):
         super(_Wav2Mp3, self).__init__(path_to_input_file)
         mime = magic.from_file(str(path_to_input_file), mime=True)
@@ -44,7 +44,7 @@ class _Wav2Mp3(Converter):
         return self._path_to_output_file
 
 
-class _Mp32Wav(Converter):
+class _Mp32Wav(FileConverter):
     def __init__(self, path_to_input_file):
         super(_Mp32Wav, self).__init__(path_to_input_file)
         mime = magic.from_file(str(path_to_input_file), mime=True)
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     #                     Path(path_real_wav)).convert()
 
     path_to_mp3 = '/home/orphefs/Documents/Code/muselearn/muselearn/data/music/candyman.mp3'
-    path_to_wav = Converter.from_type('mp3_to_wav',
-                                      Path(path_to_mp3)).convert()
+    path_to_wav = FileConverter.from_type('mp3_to_wav',
+                                          Path(path_to_mp3)).convert()
 
     print(path_to_mp3)

@@ -22,7 +22,13 @@ def init_ac_signal_square(request):
     request.cls.sampling_rate = 0.5
 
 
-fixture_collection = ('init_dc_signal', 'init_ac_signal_triangle', 'init_ac_signal_square')
+@pytest.fixture(scope='class')
+def init_ac_signal_random(request):
+    request.cls.waveform = np.array([-2, 0, 0, 0, -1, 1, 1, 1, 1, 1])
+    request.cls.sampling_rate = 0.5
+
+
+fixture_collection = ('init_dc_signal', 'init_ac_signal_triangle', 'init_ac_signal_square', 'init_ac_signal_random')
 
 
 @pytest.mark.usefixtures(*fixture_collection)

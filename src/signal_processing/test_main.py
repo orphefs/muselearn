@@ -15,10 +15,12 @@ def init_ac_signal_triangle(request):
     request.cls.waveform = np.array([-1, 1] * 5)
     request.cls.sampling_rate = 0.5
 
+
 @pytest.fixture(scope='class')
 def init_ac_signal_square(request):
     request.cls.waveform = np.array([-1, 1] * 5)
     request.cls.sampling_rate = 0.5
+
 
 fixture_collection = ('init_dc_signal', 'init_ac_signal_triangle', 'init_ac_signal_square')
 

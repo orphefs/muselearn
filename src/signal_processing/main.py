@@ -3,6 +3,7 @@ import numpy as np
 
 def main():
     print(compute_energy(np.ones(10), 1))
+    print(type(normalize(np.ones(10), 'peak')))
 
 
 def compute_energy(waveform: np.ndarray, sampling_rate: int) -> np.float64:
@@ -19,7 +20,7 @@ def duration(waveform: np.ndarray, sampling_rate: int) -> np.float64:
 
 def normalize(waveform: np.ndarray, method: str) -> np.ndarray:
     if method == 'peak':
-        return waveform / np.max(waveform)
+        return waveform / np.max(np.abs(waveform))
     elif method == 'rms':
         raise NotImplementedError
 

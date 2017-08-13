@@ -1,7 +1,7 @@
 import pytest
 import unittest
 import numpy as np
-from muselearn.src.signal_processing.main import compute_energy
+from muselearn.src.signal_processing.main import compute_energy, compute_power, duration
 
 
 @pytest.fixture(scope='class')
@@ -20,6 +20,18 @@ def init_ac_signal(request):
 class TestEnergyComputation(unittest.TestCase):
     def test_compute_energy(self):
         assert compute_energy(waveform=self.waveform, sampling_rate=self.sampling_rate) == 20.0
+
+
+@pytest.mark.usefixtures('init_dc_signal', 'init_ac_signal')
+class TestPowerComputation(unittest.TestCase):
+    def test_compute_power(self):
+        assert compute_power(waveform=self.waveform, sampling_rate=self.sampling_rate) == 1.0
+
+
+@pytest.mark.usefixtures('init_dc_signal', 'init_ac_signal')
+class TestDurationCalculation(unittest.TestCase):
+    def test_duration(self):
+        assert duration(waveform=self.waveform, sampling_rate=self.sampling_rate) == 20.0
 
 
 if __name__ == '__main__':

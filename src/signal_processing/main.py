@@ -1,9 +1,13 @@
-def video_categories_list(service):  # See full sample for function
-    results = service.videoCategories().list().execute()
+import numpy as np
 
-    print(results)
+def main():
+    print(compute_energy(np.ones(10), 1))
 
 
-video_categories_list(service,
-                      part='snippet',
-                      regionCode='US')
+
+def compute_energy(waveform, sampling_rate):
+    return np.sum(amplitude**2 for amplitude in waveform) * 1/sampling_rate
+
+
+if __name__ == '__main__':
+    main()

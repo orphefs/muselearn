@@ -1,6 +1,7 @@
 import pytest
 import numpy as np
-from muselearn.src.signal_processing.main import compute_energy, compute_power, duration, normalize
+from muselearn.src.signal_processing.basic import compute_energy, \
+    compute_power, duration, normalize, compute_energy_over_time_window
 
 triangle_waveform = [-1, 1] * 5
 dc_signal = [1, 1] * 5

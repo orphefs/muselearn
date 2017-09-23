@@ -12,7 +12,7 @@ def compute_energy_over_time_window(waveform: np.ndarray,
     wav = Waveform(waveform, sampling_rate)
     number_of_iterations = int(wav.duration / window_length_seconds)
     energies = []
-    for i in range(1, number_of_iterations+1):
+    for i in range(1, number_of_iterations + 1):
         from_sample = int((i - 1) * window_length_seconds)
         to_sample = int(i * window_length_seconds)
         energies.append({
@@ -23,6 +23,6 @@ def compute_energy_over_time_window(waveform: np.ndarray,
 
 
 if __name__ == '__main__':
-    energies = compute_energy_over_time_window(np.array([-1, 1]*5), 1, 2)
+    energies = compute_energy_over_time_window(np.array([-1, 1] * 5), 1, 2)
     for energy in energies:
         print(energy)

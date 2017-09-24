@@ -9,15 +9,15 @@ Vector = List[np.float64]
 def compute_energy_over_time_window(waveform: np.ndarray,
                                     sampling_rate: int,
                                     window_length_seconds: float) -> Vector:
-    wav = Waveform(waveform, sampling_rate)
-    number_of_iterations = int(wav.duration / window_length_seconds)
-    energies = []
+    waveform = Waveform(waveform, sampling_rate)
+    number_of_iterations = int(waveform.duration / window_length_seconds)
+    energies = {}
     for i in range(1, number_of_iterations + 1):
         from_sample = int((i - 1) * window_length_seconds)
         to_sample = int(i * window_length_seconds)
-        energies.append({
+        energies.update({
             (from_sample, to_sample): compute_energy(
-                wav[from_sample:to_sample], sampling_rate)
+                waveform[from_sample:to_sample], sampling_rate)
         })
     return energies
 

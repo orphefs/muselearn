@@ -3,6 +3,7 @@ import wave
 from wave import Wave_read
 from scipy.io.wavfile import read
 from pathlib import Path
+from muselearn.src.containers.waveform import Waveform
 
 
 class _Loader(object):
@@ -17,20 +18,16 @@ class _Loader(object):
         """Retrieve data from the input source and return an object."""
         return
 
-    @abc.abstractmethod
-    def load(self):
-        """Retrieve data from the input source and return an object."""
-        return
-
 
 class WavLoader(_Loader):
     def __init__(self, path_to_file):
         super(WavLoader, self).__init__(path_to_file)
 
-    def load(self) -> Wave_read:
+    def load(self) -> Waveform:
         with open(str(self._path_to_file), 'rb') as infile:
-            self._content = read(infile)
-        return self._content
+            return Waveform(input_waveform=read(infile)[1],
+                            sampling_rate=read(infile)[0])
+
 
 if __name__ == '__main__':
     path_to_file = Path('/home/orphefs/Documents/Code/muselearn/muselearn/data/music/_candyman.wav')

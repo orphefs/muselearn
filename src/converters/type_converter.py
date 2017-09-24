@@ -38,5 +38,5 @@ class _Wav2Numpy(TypeConverter):
     def convert(self):
         '''Convert a Wave_read object into numpy array'''
         raise NotImplementedError
-        # return self._output_object
+        return self._output_object
 

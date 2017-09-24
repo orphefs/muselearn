@@ -3,16 +3,13 @@ import numpy as np
 
 
 class Waveform(object):
-    def __init__(self, input_waveform: np.ndarray, sampling_rate: int):
-        self._waveform = input_waveform
+    def __init__(self, input_left: np.ndarray,input_right: np.ndarray, sampling_rate: int):
+        self._left = input_left
+        self._right = input_right
         self._sampling_rate = sampling_rate
-        self._number_of_samples = len(input_waveform)
-        self._duration = duration(input_waveform,
+        self._number_of_samples = len(input_left)
+        self._duration = duration(input_left,
                                   sampling_rate)
-        self._waveform = input_waveform
-
-    def __getitem__(self, item):
-        return self._waveform[item]
 
     @property
     def duration(self):
@@ -23,8 +20,12 @@ class Waveform(object):
         return self._sampling_rate
 
     @property
-    def waveform(self):
-        return self._waveform
+    def left(self):
+        return self._left
+
+    @property
+    def right(self):
+        return self._right
 
     def __len__(self):
         return self._number_of_samples

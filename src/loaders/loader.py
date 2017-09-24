@@ -25,7 +25,8 @@ class WavLoader(_Loader):
 
     def load(self) -> Waveform:
         with open(str(self._path_to_file), 'rb') as infile:
-            return Waveform(input_waveform=read(infile)[1],
+            return Waveform(input_left=read(infile)[1][0],
+                            input_right=read(infile)[1][1],
                             sampling_rate=read(infile)[0])
 
 

@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from muselearn.src.signal_processing.advanced import compute_energy_over_time_window
+from muselearn.src.signal_processing.advanced import compute_quantity_over_time_window
 
 triangle_waveform = [-1, 1] * 5
 dc_signal = [1, 1] * 5
@@ -17,6 +17,6 @@ special_waveform = [-1, 1, 2, 1, 1, 1, 1]
     pytest.param(special_waveform, 1, 4, [{(0, 4): 7.0}], id='special'),
 ])
 def test_compute_energy_over_time_window(waveform, sampling_rate, window_length_seconds, expected_result):
-    assert compute_energy_over_time_window(waveform=waveform,
-                                           sampling_rate=sampling_rate,
-                                           window_length_seconds=window_length_seconds), expected_result
+    assert compute_quantity_over_time_window(waveform=waveform,
+                                             sampling_rate=sampling_rate,
+                                             window_length_seconds=window_length_seconds), expected_result
